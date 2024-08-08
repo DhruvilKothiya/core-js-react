@@ -1,35 +1,26 @@
-import { getValue } from "@testing-library/user-event/dist/utils";
-import React, { useMemo, useState } from "react";
+import React, { useState, useMemo } from "react";
 
 export default function MemoComponents() {
-  const [mynum, setMyNum] = useState(0);
-  const [show, setShow] = useState(true);
+  const [Count, setCount] = useState(0);
+  const [item, setItem] = useState(100);
+  const multicountMemo = useMemo(function multicount() {
+    console.log("multiple");
+    return Count * 5;
+  },[Count]);
 
-  const getValue = () => {
-    return setMyNum(mynum + 1);
-  };
-
-  useMemo(() => {
-    const checkData = countNumber(mynum);
-  }, [mynum]);
-
-  
-  const countNumber = (num) => {
-    console.log("`file:Memo.jsx `line 12-countNumb`num", num);
-    for (let i = 0; i < 10000000; i++) {}
-    return num;
-  };
-
-  console.log("redering compoenttn");
+  // function multicount() {
+  //   console.log("multiple")
+  //   return Count * 5;
+  // }
   return (
     <div>
-      <button onClick={getValue} style={{ backgroundColor: "red" }}>
-        Counter
-      </button>
-      <p>My new Number{checkData}</p>
-      <button onClick={() => setShow(!show)}>
-        {show ? "You Clicked me" : "click me plz"}
-      </button>
+      <h1>Usememo Hook in React </h1>
+      <h2>Count:{Count}</h2>
+      <h2>Item:{item}</h2>
+      <h2>{multicountMemo}</h2>
+      <button onClick={() => setCount(Count + 1)}>Update Count</button>
+      <button onClick={() => setItem(item * 10)}>Update Item</button>
+      MemoComponents
     </div>
   );
 }
